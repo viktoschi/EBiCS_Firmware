@@ -856,7 +856,7 @@ int main(void)
 
 #else //else NTCE
 			  // read in throttle for throttle override
-			  uint16_mapped_throttle = map(ui16_throttle, THROTTLE_OFFSET, THROTTLE_MAX, 0,PH_CURRENT_MAX);
+              uint16_mapped_throttle = map(adcData[1] , 700, 2700, 0,PH_CURRENT_MAX);
 
 #endif //end NTCE
 
@@ -1042,7 +1042,8 @@ int main(void)
 		  //print values for debugging
 
 
-		 sprintf_(buffer, "%d, %d, %d, %d, %d, %d, %d, %d, %d\r\n", adcData[7],MS.int_Temperature, i16_int_Temp_V25, MS.i_q_setpoint, uint32_PAS, int32_temp_current_target , MS.u_d,MS.u_q, SystemState);
+		 sprintf_(buffer, "%d, %d, %d, %d, %d, %d, %d, %d, %d\r\n", adcData[1],adcData[6], uint32_torque_cumulated>>5, MS.i_q_setpoint, uint32_PAS, int32_temp_current_target , MS.i_d,MS.i_q, SystemState);
+		 // sprintf_(buffer, "%d, %d, %d, %d, %d, %d, %d, %d, %d\r\n", adcData[7],MS.int_Temperature, i16_int_Temp_V25, MS.i_q_setpoint, uint32_PAS, int32_temp_current_target , MS.u_d,MS.u_q, SystemState);
 		 // sprintf_(buffer, "%d, %d, %d, %d, %d, %d, %d\r\n",(uint16_t)adcData[0],(uint16_t)adcData[1],(uint16_t)adcData[2],(uint16_t)adcData[3],(uint16_t)(adcData[4]),(uint16_t)(adcData[5]),(uint16_t)(adcData[6])) ;
 		 // sprintf_(buffer, "%d, %d, %d, %d, %d, %d\r\n",tic_array[0],tic_array[1],tic_array[2],tic_array[3],tic_array[4],tic_array[5]) ;
 		  i=0;
