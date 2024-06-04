@@ -76,14 +76,14 @@
 
 //---------------------------------------------------------------------
 //Throttle settings
-#define THROTTLE_OFFSET 690   //only default value, throttle offset is set at startup automatically
-#define THROTTLE_MAX 2850
+#define THROTTLE_OFFSET 700   //only default value, throttle offset is set at startup automatically
+#define THROTTLE_MAX 2700
 #define THROTTLE_OVERRIDE
 
 //--------------------------------------------------------------------
 //Speed settings
 #define WHEEL_CIRCUMFERENCE 2200
-#define GEAR_RATIO 80 //11 for BionX IGH3
+#define GEAR_RATIO 50 //11 for BionX IGH3
 #define SPEEDLIMIT 25
 #define PULSES_PER_REVOLUTION 1
 #define SPEEDSOURCE INTERNAL
@@ -107,6 +107,7 @@
 //---------------------------------------------------------------------
 //Display settings
 #define DISPLAY_TYPE DISPLAY_TYPE_DEBUG
+//#define DISPLAY_TYPE DISPLAY_TYPE_KINGMETER_901U //KM5S
 
 
 //---------------------------------------------------------------------
