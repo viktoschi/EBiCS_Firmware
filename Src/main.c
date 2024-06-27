@@ -2032,7 +2032,7 @@ void bafang_update(void)
 {
     /* Prepare Tx parameters */
 
-	if(MS.Voltage*CAL_BAT_V>BATTERY_LEVEL_5)battery_percent_fromcapacity=75;
+	if(MS.Voltage*CAL_BAT_V>BATTERY_LEVEL_5)battery_percent_fromcapacity=95;
 	else if(MS.Voltage*CAL_BAT_V>BATTERY_LEVEL_4)battery_percent_fromcapacity=50;
 	else if(MS.Voltage*CAL_BAT_V>BATTERY_LEVEL_3)battery_percent_fromcapacity=30;
 	else if(MS.Voltage*CAL_BAT_V>BATTERY_LEVEL_2)battery_percent_fromcapacity=10;
