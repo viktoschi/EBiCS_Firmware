@@ -51,11 +51,11 @@
 
 //----------------------------------------------------------------------
 //Battery bar settings for Kunteng and Bafang Display
-#define BATTERY_LEVEL_1 323000
-#define BATTERY_LEVEL_2 329000
-#define BATTERY_LEVEL_3 344000
-#define BATTERY_LEVEL_4 368000
-#define BATTERY_LEVEL_5 380000
+#define BATTERY_LEVEL_1 44300
+#define BATTERY_LEVEL_2 46900
+#define BATTERY_LEVEL_3 58400
+#define BATTERY_LEVEL_4 50800
+#define BATTERY_LEVEL_5 52000
 
 //----------------------------------------------------------------------
 //PI-control factor settings
@@ -108,8 +108,8 @@
 //Display settings
 //#define DISPLAY_TYPE DISPLAY_TYPE_DEBUG
 //#define DISPLAY_TYPE DISPLAY_TYPE_KINGMETER_618U //KM5S
-#define DISPLAY_TYPE DISPLAY_TYPE_KINGMETER_901U //KM5S
-
+//#define DISPLAY_TYPE DISPLAY_TYPE_KINGMETER_901U //KM5S
+#define DISPLAY_TYPE DISPLAY_TYPE_BAFANG
 
 //---------------------------------------------------------------------
 //Regen settings
