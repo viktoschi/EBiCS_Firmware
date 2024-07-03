@@ -2,7 +2,7 @@ name: Compile on Commit
 
 on:
   push:
-    branches: [ NewGeneration12FET ]
+    branches: [ '**' ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -15,13 +15,16 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: log untrusted output
       run: |
+
         # disable command workflow processing
         echo "::stop-commands::`echo -n ${{ github.token }} | sha256sum | head -c 64`"
+
         # log untrusted output
         echo "untrusted output"
+
         # enable workflow command processing
         echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::"
     - name: Create folder
@@ -39,16 +42,20 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install srecord
-        
+
     - name: Install java
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'temurin' # See 'Supported distributions' for available options
         java-version: '17'
     - run: java -cp java make/hexToLsh.java
-    
+              
+    - name: copy hex file
+      run: |
+        cp ${{ github.workspace }}/build/EBiCS_Firmware.hex ${{ github.workspace }}/output/EBiCS_Firmware.hex
+        
     - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         path: ${{ github.workspace }}/output
         name: EBiCS_build_${{ github.run_number }}
