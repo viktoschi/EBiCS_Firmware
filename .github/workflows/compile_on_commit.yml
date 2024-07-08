@@ -1,10 +1,17 @@
-name: Compile on Commit
+name: Compile on Pull request
 
 on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+    
   push:
-    branches: [ master ]
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches:
+      - 'master'
+
+concurrency: production
 
 jobs:
   build:
@@ -15,7 +22,7 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: log untrusted output
       run: |
 
@@ -26,13 +33,18 @@ jobs:
         echo "untrusted output"
 
         # enable workflow command processing
-        echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::"
-    - name: Create folder
+        echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::" 
+  
+    - name: Create build folder
       run: |
         mkdir build 
-        ls ${{ github.workspace }}
+     
+    - name: Create release folder
+      run: |
+        mkdir release 
+    
     - name: arm-none-eabi-gcc
-      uses: fiam/arm-none-eabi-gcc@v1.0.2
+      uses: fiam/arm-none-eabi-gcc@v1.0.4
       with:
         release: '9-2020-q2'
     - name: make
@@ -44,15 +56,38 @@ jobs:
         sudo apt-get install srecord
         
     - name: Install java
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'temurin' # See 'Supported distributions' for available options
         java-version: '17'
     - run: java -cp java make/hexToLsh.java
     
+    - name: Bump version and push tag
+      id: bump
+      uses: anothrNick/github-tag-action@v1 # Don't use @master or @v1 unless you're happy to test the latest version
+      env:
+        GITHUB_TOKEN: ${{ GITHUB.TOKEN }} # if you don't want to set write permissions use a PAT token
+        WITH_V: false
+        DEFAULT_BUMP: patch
+    
+    - name: Copy hex and bin file
+      run: |
+        cp ${{ github.workspace }}/build/EBiCS_Firmware.hex ${{ github.workspace }}/release/${{ steps.bump.outputs.new_tag }}_EBiCS_Firmware.hex
+        cp ${{ github.workspace }}/build/EBiCS_Firmware.bin ${{ github.workspace }}/release/${{ steps.bump.outputs.new_tag }}_EBiCS_Firmware.bin
+        cp ${{ github.workspace }}/output/EBiCS_Firmware.lsh ${{ github.workspace }}/release/${{ steps.bump.outputs.new_tag }}_EBiCS_Firmware.lsh
+        cp ${{ github.workspace }}/Inc/config.h ${{ github.workspace }}/release/${{ steps.bump.outputs.new_tag }}_config.h
+        cp ${{ github.workspace }}/Inc/main.h ${{ github.workspace }}/release/${{ steps.bump.outputs.new_tag }}_main.h
+        
     - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        path: ${{ github.workspace }}/output
-        name: EBiCS_build_${{ github.run_number }}
+        path: ${{ github.workspace }}/release
+        name: EBiCS_build_${{ steps.bump.outputs.new_tag }}
         retention-days: 10
+
+            
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+          files: ${{ github.workspace }}/release/*
+          tag_name: ${{ steps.bump.outputs.new_tag }}
