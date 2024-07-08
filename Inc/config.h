@@ -24,13 +24,22 @@
 #define TRIGGER_OFFSET_ADC 50
 #define TRIGGER_DEFAULT 2020
 #define _T 2028
-#define CAL_BAT_V 256
-#define CAL_V 25
+#define CAL_BAT_V 25
+#define CAL_V 15LL<<8
 #define CAL_I 38LL<<8
-#define INDUCTANCE 6LL
-#define RESISTANCE 40LL
-#define FLUX_LINKAGE 1200LL
-#define GAMMA 9LL
+// BionX IGH3
+//#define INDUCTANCE 12LL
+//#define RESISTANCE 220LL
+//#define FLUX_LINKAGE 2400LL
+//#define GAMMA 13LL
+
+// Hoverboard Motor
+#define INDUCTANCE 11LL
+#define RESISTANCE 120LL
+#define FLUX_LINKAGE 2000LL
+#define GAMMA 13LL
+
+
 //#define FAST_LOOP_LOG
 //#define DISABLE_DYNAMIC_ADC
 //#define INDIVIDUAL_MODES
@@ -42,11 +51,11 @@
 
 //----------------------------------------------------------------------
 //Battery bar settings for Kunteng and Bafang Display
-#define BATTERY_LEVEL_1 323000
-#define BATTERY_LEVEL_2 329000
-#define BATTERY_LEVEL_3 344000
-#define BATTERY_LEVEL_4 368000
-#define BATTERY_LEVEL_5 380000
+#define BATTERY_LEVEL_1 453000
+#define BATTERY_LEVEL_2 479000
+#define BATTERY_LEVEL_3 494000
+#define BATTERY_LEVEL_4 518000
+#define BATTERY_LEVEL_5 530000
 
 //----------------------------------------------------------------------
 //PI-control factor settings
@@ -67,17 +76,17 @@
 
 //---------------------------------------------------------------------
 //Throttle settings
-#define THROTTLE_OFFSET 1250   //only default value, throttle offset is set at startup automatically
-#define THROTTLE_MAX 2850
+#define THROTTLE_OFFSET 800   //only default value, throttle offset is set at startup automatically
+#define THROTTLE_MAX 2600
 #define THROTTLE_OVERRIDE
 
 //--------------------------------------------------------------------
 //Speed settings
-#define WHEEL_CIRCUMFERENCE 2200
-#define GEAR_RATIO 98 //11 for BionX IGH3
-#define SPEEDLIMIT 25
+#define WHEEL_CIRCUMFERENCE 1860
+#define GEAR_RATIO 50 //11 for BionX IGH3
+#define SPEEDLIMIT 26
 #define PULSES_PER_REVOLUTION 1
-#define SPEEDSOURCE INTERNAL
+#define SPEEDSOURCE EXTERNAL
 #define SPEEDFILTER 1
 #define SPDSHFT 0
 
@@ -91,19 +100,22 @@
 
 //---------------------------------------------------------------------
 //torquesensor settings
-#define TS_COEF 2400
+#define TS_COEF 66000
 #define TS_MODE
-//#define TQONAD1
+#define TQONAD1
 
 //---------------------------------------------------------------------
 //Display settings
-#define DISPLAY_TYPE DISPLAY_TYPE_KINGMETER_901U
+//#define DISPLAY_TYPE DISPLAY_TYPE_DEBUG
+//#define DISPLAY_TYPE DISPLAY_TYPE_KINGMETER_618U //KM5S
+//#define DISPLAY_TYPE DISPLAY_TYPE_KINGMETER_901U //KM5S
+#define DISPLAY_TYPE DISPLAY_TYPE_BAFANG
 
 //---------------------------------------------------------------------
 //Regen settings
 
-#define REGEN_CURRENT 800
-#define REGEN_CURRENT_MAX 10000
+#define REGEN_CURRENT 0
+#define REGEN_CURRENT_MAX 0
 //#define ADC_BRAKE
 
 //---------------------------------------------------------------------
