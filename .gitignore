@@ -19,3 +19,6 @@ Debug
 /JavaConfigurator/dist/
 /Release/
 /build/
+
+.cproject
+STM32F103C6Tx_FLASH.ld
