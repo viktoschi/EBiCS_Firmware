@@ -795,6 +795,7 @@ int main(void)
 				else int32_temp_current_target=0;
 
 #endif
+				HAL_GPIO_WritePin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin, GPIO_PIN_SET);
 				int32_temp_current_target= -map(MS.Voltage*CAL_V,BATTERYVOLTAGE_MAX-1000,BATTERYVOLTAGE_MAX,int32_temp_current_target,0);
 			}
 
@@ -804,6 +805,7 @@ int main(void)
 			else if(ui8_Push_Assist_flag)int32_temp_current_target=(MS.assist_level*PUSHASSIST_CURRENT)>>8; //does not work for BAFANG and Kunteng protocol actually
 			// last priority normal ride conditiones
 			else {
+				HAL_GPIO_WritePin(BRAKE_LIGHT_GPIO_Port, BRAKE_LIGHT_Pin, GPIO_PIN_RESET);
 
 #ifdef TS_MODE //torque-sensor mode
 				//calculate current target form torque, cadence and assist level
@@ -871,7 +873,7 @@ int main(void)
 
 #else //else NTCE
 				// read in throttle for throttle override
-				uint16_mapped_throttle = map(ui16_throttle, ui16_throttle_offset, THROTTLE_MAX, 0,PH_CURRENT_MAX);
+				uint16_mapped_throttle = map(adcData[1], THROTTLE_OFFSET, THROTTLE_MAX, 0,PH_CURRENT_MAX);
 
 #endif //end NTCE
 
